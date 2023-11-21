@@ -13,6 +13,8 @@ urlpatterns = [
     #? blog pages
     path("about/", home.views.about, name="about"),
     path("feature/", home.views.feature, name="feature"),
+    path("classes/", home.views.classes, name="classes"),
+    path("contact/", home.views.contact, name="contact"),
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),
