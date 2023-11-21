@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     #? 'editor'
     'ckeditor',
     'ckeditor_uploader',
-
+    'active_link',
 ]
 
 MIDDLEWARE = [

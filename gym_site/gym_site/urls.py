@@ -11,7 +11,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #? blog pages
-    path("about", home.views.about, name="about"),
+    path("about/", home.views.about, name="about"),
+    path("feature/", home.views.feature, name="feature"),
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),

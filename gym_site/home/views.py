@@ -13,5 +13,12 @@ def index(request):
 
 def about(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    context = {'setting': setting,
+               'page': 'about',}
     return render(request, 'about.html', context)
+
+def feature(request):
+    setting = Setting.objects.get(pk=1)
+    context = {'setting': setting,
+               'page': 'feature',}
+    return render(request, 'feature.html', context)
