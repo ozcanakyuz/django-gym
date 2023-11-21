@@ -10,3 +10,8 @@ def index(request):
     context = {'setting': setting,
                'page': 'home',}
     return render(request, 'index.html', context)
+
+def about(request):
+    setting = Setting.objects.get(pk=1)
+    context = {'setting': setting}
+    return render(request, 'about.html', context)

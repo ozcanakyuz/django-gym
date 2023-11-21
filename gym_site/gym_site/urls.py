@@ -3,11 +3,15 @@ from django.contrib import admin
 from django.urls import include, path
 
 from gym_site import settings
+import home
 
 urlpatterns = [
     path('', include('home.urls')),     #! random url result
     path('home/', include('home.urls')),
     path('admin/', admin.site.urls),
+
+    #? blog pages
+    path("about", home.views.about, name="about"),
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),
