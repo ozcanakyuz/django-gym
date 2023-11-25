@@ -15,7 +15,7 @@
 
                 {% with request.resolver_match.url_name as url_name %}
                     
-                    <a href="/" class="nav-item nav-link {% if page == 'home' %}active{% endif %}">Home</a>
+                    <a href="/" class="nav-item nav-link {% if url_name == 'home' %}active{% endif %}">Home</a>
                     <a href="about" class="nav-item nav-link {% if url_name == 'about' %}active{% endif %}">About Us</a>
                     <a href="feature" class="nav-item nav-link {% if url_name == 'feature' %}active{% endif %}">Our Features</a>
                     <a href="classes" class="nav-item nav-link {% if url_name == 'classes' %}active{% endif %}">Classes</a>
