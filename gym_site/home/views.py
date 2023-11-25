@@ -29,11 +29,11 @@ def contact(request):
     context = {'page': 'Contact'}
     return render(request, 'contact.html', context)
 def blog(request):
-    context = {'page': 'blog',}
+    context = {'page': 'Blog',}
     return render(request, 'blog.html', context)
 
 def single(request):
-    context = {'page': 'single',}
+    context = {'page': 'Detail',}
     return render(request, 'single.html', context)
 
 #! LOG IN - LOG OUT & SIGN UP  
@@ -48,7 +48,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Başarılı şekilde oturum açtınız {}".format(user.username))
-                return HttpResponseRedirect('/login')
+                return HttpResponseRedirect('/home')
             else:
                 messages.warning(request, "Girilen Bilgiler Hatalı Tekrar Deneyiniz {}".format(username))
                 return HttpResponseRedirect('/login')

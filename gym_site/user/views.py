@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from home.models import Setting, UserProfile
@@ -12,11 +12,11 @@ from user.forms import UserUpdateForm, ProfileUpdateForm
 
 def index(request):
     current_user = request.user
-    # print(current_user)
-    profile = UserProfile.objects.get(user_id = current_user.pk)
-    print(profile)
-    context = {'profile': profile}
-    return render(request, 'user_profile.html', context)
+    print(current_user)
+    # profile = UserProfile.objects.get(user_id = current_user.pk)
+    # print(profile)
+    # context = {'profile': profile}
+    return render(request, 'user_profile.html')
 
 @login_required(login_url='/login') # Check login
 def user_update(request):
