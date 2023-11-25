@@ -34,9 +34,14 @@ def contact(request):
     context = {'setting': setting,
                'page': 'Contact',}
     return render(request, 'contact.html', context)
-
 def blog(request):
     setting = Setting.objects.get(pk=1)
     context = {'setting': setting,
                'page': 'blog',}
     return render(request, 'blog.html', context)
+
+def single(request):
+    setting = Setting.objects.get(pk=1)
+    context = {'setting': setting,
+               'page': 'single',}
+    return render(request, 'single.html', context)

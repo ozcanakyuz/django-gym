@@ -16,6 +16,7 @@ urlpatterns = [
     path("classes/", home.views.classes, name="classes"),
     path("contact/", home.views.contact, name="contact"),
     path("blog/", home.views.blog, name="blog"),
+    path("single/", home.views.single, name="single"),
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),
