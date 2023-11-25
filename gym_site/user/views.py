@@ -7,16 +7,16 @@ from django.shortcuts import render
 
 from home.models import Setting, UserProfile
 
-from product.models import Comment
+from product.models import Comment 
 from user.forms import UserUpdateForm, ProfileUpdateForm
 
 def index(request):
     current_user = request.user
-    print(current_user)
-    # profile = UserProfile.objects.get(user_id = current_user.pk)
-    # print(profile)
-    # context = {'profile': profile}
-    return render(request, 'user_profile.html')
+    # print(current_user)
+    profile = UserProfile.objects.get(user_id = current_user.pk)
+    print(profile)
+    context = {'profile': profile}
+    return render(request, 'user_profile.html', context)
 
 @login_required(login_url='/login') # Check login
 def user_update(request):

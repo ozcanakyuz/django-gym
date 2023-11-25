@@ -47,7 +47,7 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                messages.success(request, "Başarılı şekilde oturum açtınız {}".format(user.username))
+                #? messages.success(request, "Başarılı şekilde oturum açtınız {}".format(user.username))
                 return HttpResponseRedirect('/home')
             else:
                 messages.warning(request, "Girilen Bilgiler Hatalı Tekrar Deneyiniz {}".format(username))
@@ -76,7 +76,7 @@ def signup_view(request):
             data.user_id=current_user.id
             data.image="images/users/user.png"
             data.save()
-            messages.success(request, 'Your account has been created!')
+            # messages.success(request, 'Your account has been created!')
             return HttpResponseRedirect('/')
         else:
             messages.warning(request,form.errors)

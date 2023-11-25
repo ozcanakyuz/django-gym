@@ -58,10 +58,11 @@ class UserProfile(models.Model):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description = 'Image'
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender,instance,created,**kargs):
-    if created:
-        UserProfile.objects.create(user=instance)
+#! USER HATALARININ SEBEBI !! **kwargs --> SignUp tıklayınca hata vermesinin sebebi alttaki kod!
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender,instance,created,**kwargs):
+#     if created:
+#         UserProfile.objects.create(user=instance)
 
 
 class UserProfileForm(ModelForm):
@@ -91,27 +92,27 @@ class ContactFormMessage(models.Model):
         return self.name
 
 
-# class ContactForm(ModelForm):
-#     class Meta:
-#         model = ContactFormMessage
-#         fields = ['name', 'email', 'subject','message']
-#         widgets = {
-#             'name'   : TextInput(attrs={'class': 'input','placeholder':'Name & Surname'}),
-#             'subject' : TextInput(attrs={'class': 'input','placeholder':'Subject'}),
-#             'email'   : TextInput(attrs={'class': 'input','placeholder':'Email Address'}),
-#             'message' : Textarea(attrs={'class': 'input','placeholder':'Your Message','rows':'5'}),
-#         }
-
 class ContactForm(ModelForm):
     class Meta:
         model = ContactFormMessage
-        fields = ['name', 'email', 'subject', 'message']
+        fields = ['name', 'email', 'subject','message']
         widgets = {
-            'name': TextInput(
-                attrs={'type': "text",'class': "form-control", 'id': "name", 'placeholder': "Your Name", 'required': "required",'data-validation-required-message ': "Please enter your name"}),
-            'email': TextInput(
-                attrs={'type': 'email', 'class': "form-control", 'id': "email", 'placeholder': "Your Email",'required': "required", 'data-validation-required-message': "Please enter your email"}),
-            'subject': TextInput(
-                attrs={'type': "text", 'class': "form-control", 'id': "subject", 'placeholder': "Subject",'required': "required", 'data-validation-required-message': "Please enter a subject"}),
-            'message': Textarea(attrs={'class': "form-control", 'rows': "6", 'id': "message", 'placeholder': "Message",'required': "required",'data-validation-required-message': "Please enter your message"}),
+            'name'   : TextInput(attrs={'class': 'input','placeholder':'Name & Surname'}),
+            'subject' : TextInput(attrs={'class': 'input','placeholder':'Subject'}),
+            'email'   : TextInput(attrs={'class': 'input','placeholder':'Email Address'}),
+            'message' : Textarea(attrs={'class': 'input','placeholder':'Your Message','rows':'5'}),
         }
+
+# class ContactForm(ModelForm):
+#     class Meta:
+#         model = ContactFormMessage
+#         fields = ['name', 'email', 'subject', 'message']
+#         widgets = {
+#             'name': TextInput(
+#                 attrs={'type': "text",'class': "form-control", 'id': "name", 'placeholder': "Your Name", 'required': "required",'data-validation-required-message ': "Please enter your name"}),
+#             'email': TextInput(
+#                 attrs={'type': 'email', 'class': "form-control", 'id': "email", 'placeholder': "Your Email",'required': "required", 'data-validation-required-message': "Please enter your email"}),
+#             'subject': TextInput(
+#                 attrs={'type': "text", 'class': "form-control", 'id': "subject", 'placeholder': "Subject",'required': "required", 'data-validation-required-message': "Please enter a subject"}),
+#             'message': Textarea(attrs={'class': "form-control", 'rows': "6", 'id': "message", 'placeholder': "Message",'required': "required",'data-validation-required-message': "Please enter your message"}),
+#         }
