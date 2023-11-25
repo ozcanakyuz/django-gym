@@ -1,0 +1,65 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} GYMNAST | User Profile {% endblock %}
+{% block description %} index description {% endblock %}
+{% block keywords %} index keywords {% endblock %}
+
+{% block body %}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">User Profile</h4>
+        <div class="d-inline-flex">
+            <p class="m-0 text-white"><a class="text-white" href="/home">Home</a></p>
+            <p class="m-0 text-white px-2">/</p>
+            <p class="m-0 text-white">User Comments</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Comments Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        {% include 'user_panel.html' %}
+        <div class="col-lg-9 table-responsive mb-5">
+            <div class="order-summary clearfix">
+                <div class="section-title">
+                    <h3 class="title">Order List</h3>
+                </div>
+                   <table class="shopping-cart-table table">
+                    <tr>
+                        <th class="text-left">Subject </th>
+                        <th class="text-left">Comment </th>
+                        <th class="text-left">Status </th>
+                        <th class="text-left">Date </th>
+                        <th class="text-left">Detail </th>
+                    </tr>
+                    {% for rs in comments %}
+                        <tr>
+                            <td class="text-left">
+                                <a href="/product_detail/{{ rs.product_id }}/{{ rs.product.slug }}">
+                                    <strong> {{ rs.product.title }}</strong>
+                                </a>
+                            </td>
+                            <td class="text-left">{{ rs.subject }} </td>
+                            <td class="text-left">{{ rs.comment }} </td>
+                            <td class="text-left">{{ rs.status }} </td>
+                            <td class="text-left">{{ rs.create_at }} </td>
+                            <td class="text-left">
+                                <a class="primary-btn" href="/user/deletecomment/{{ rs.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Comments End -->
+
+
+
+
+ {% endblock %}

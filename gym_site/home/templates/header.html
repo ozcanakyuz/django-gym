@@ -26,15 +26,15 @@
                             <a href="/single" class="dropdown-item {% if url_name == 'single' %}active{% endif %}">Blog Detail</a>
                         </div>
                     </div>
-                    <a href="contact" class="nav-item nav-link {% if url_name == 'contact' %}active{% endif %}">Contact</a>
-                {% endwith %}
+                    <a href="/contact" class="nav-item nav-link {% if url_name == 'contact' %}active{% endif %}">Contact</a>
                 
+                {% comment %}!! ACTIVE COMMAND DON'T WORK !! {% endcomment %}
                 {%  if user.id is not None %}
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.username }}</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if url_name  == 'user' %}active{% endif %}" data-toggle="dropdown">{{ user.username }}</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                    <a href="/user"  class="dropdown-item">User Profile</a>
-                    <a href="/user/comments"  class="dropdown-item">My Comments</a>
+                    <a href="/user" class="dropdown-item {% if url_name == 'user' %}active{% endif %}">User Profile</a>
+                    <a href="/user/comments"  class="dropdown-item {% if url_name == '/user/comments' %}active{% endif %}">My Comments</a>
                     <a href="/logout"  class="dropdown-item">Logout</a>
                     </div>
                 </div>
@@ -43,6 +43,8 @@
                     <a href="/login" class="nav-item nav-link">Log In</a>
                 
                 {% endif %}
+                {% endwith %}
+
             </div>
         </div>
                 </div>

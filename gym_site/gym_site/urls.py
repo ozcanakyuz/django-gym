@@ -20,7 +20,7 @@ urlpatterns = [
     path("single/", home.views.single, name="single"),
 
     path("signup/", home.views.signup_view, name="signup"),
-    path('user/', include('user.urls')),
+    path('user/', include('user.urls'), name="user"),
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),
