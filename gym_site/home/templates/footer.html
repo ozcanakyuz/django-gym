@@ -64,8 +64,9 @@
     <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
 
     <!-- Contact Javascript File -->
-    <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
-    <script src="{% static 'mail/contact.js' %}"></script>
+    {% comment %}! SING UP KISMINDAKI TIKLAYIN PHP HATASININ COZUMU ALTTAKI JS KODLARINI SILMEK {% endcomment %}
+    {% comment %} <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+    <script src="{% static 'mail/contact.js' %}"></script> {% endcomment %}
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>

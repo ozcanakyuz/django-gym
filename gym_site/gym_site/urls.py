@@ -2,6 +2,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+
 from gym_site import settings
 import home
 
@@ -17,6 +18,9 @@ urlpatterns = [
     path("contact/", home.views.contact, name="contact"),
     path("blog/", home.views.blog, name="blog"),
     path("single/", home.views.single, name="single"),
+
+    path("signup/", home.views.signup_view, name="signup"),
+
 
     #? for the ckeditor
     path('ckeditor/', include('ckeditor_uploader.urls')),

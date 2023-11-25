@@ -1,0 +1,64 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} Gym | Sign Up {% endblock %}
+{% block description %} index description {% endblock %}
+{% block keywords %} index keywords {% endblock %}
+
+{% block body %}
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Sign Up</h4>
+        <div class="d-inline-flex">
+            <p class="m-0 text-white"><a class="text-white" href="/home">Home</a></p>
+            <p class="m-0 text-white px-2">/</p>
+            <p class="m-0 text-white">Sign Up</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Sign Up Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Join Us Now !!</span></h2>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form">
+                    <div id="success">
+                             {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{message.tags}}" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                    </div>
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p | safe }}
+                        <div>
+                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-5">
+
+                {{ setting.contact | safe }}
+
+            </div>
+        </div>
+    </div>
+<!-- Sign Up End -->
+
+
+
+
+
+ {% endblock %}
+

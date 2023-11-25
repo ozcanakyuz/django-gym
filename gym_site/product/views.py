@@ -16,11 +16,11 @@ def addcomment(request,id):
       form = CommentForm(request.POST)
       if form.is_valid():
          data = Comment()  # create relation with model
-         data.name = form.cleaned_data['name']
+         data.user = form.cleaned_data['user']
          data.email = form.cleaned_data['email']
          data.comment = form.cleaned_data['comment']
-         data.ip = request.META.get('REMOTE_ADDR')
-         data.product_id=id
+         # data.ip = request.META.get('REMOTE_ADDR')
+         # data.product_id=id
          current_user= request.user
          data.user_id=current_user.id
 

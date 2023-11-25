@@ -1,47 +1,106 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render
 
-from home.models import Setting
+from home.forms import LoginForm, SignUpForm
+from home.models import ContactFormMessage, UserProfileForm, UserProfile
+from product.models import Comment
 
 # Create your views here.
 
 def index(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'Home',}
+    context = {'page': 'Home'}
     return render(request, 'index.html', context)
 
 def about(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'About',}
+    context = {'page': 'About'}
     return render(request, 'about.html', context)
 
 def feature(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'Feature',}
+    context = {'page': 'Feature'}
     return render(request, 'feature.html', context)
 
 def classes(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'Classes',}
+    context = {'page': 'Classes'}
     return render(request, 'classes.html', context)
 
 def contact(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'Contact',}
+    context = {'page': 'Contact'}
     return render(request, 'contact.html', context)
 def blog(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'blog',}
+    context = {'page': 'blog',}
     return render(request, 'blog.html', context)
 
 def single(request):
-    setting = Setting.objects.get(pk=1)
-    context = {'setting': setting,
-               'page': 'single',}
+    context = {'page': 'single',}
     return render(request, 'single.html', context)
+
+#! LOG IN - LOG OUT & SIGN UP  
+def login_view(request):
+    if request.method == 'POST':  # check post
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Başarılı şekilde oturum açtınız {}".format(user.username))
+                return HttpResponseRedirect('/login')
+            else:
+                messages.warning(request, "Girilen Bilgiler Hatalı Tekrar Deneyiniz {}".format(username))
+                return HttpResponseRedirect('/login')
+
+    form = LoginForm
+    context = {'form': form}
+    return render(request, 'login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save() #completed sign up
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            # Create data in profile table for user
+            current_user = request.user
+            data=UserProfile()
+            data.user_id=current_user.id
+            data.image="images/users/user.png"
+            data.save()
+            messages.success(request, 'Your account has been created!')
+            return HttpResponseRedirect('/')
+        else:
+            messages.warning(request,form.errors)
+            return HttpResponseRedirect('/signup')
+
+    form = SignUpForm()
+    context = {'form': form}
+    return render(request, 'signup_form.html', context)
+
+def userProfile_view(request):
+    if request.method == 'POST':  # check post
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            data = ContactFormMessage()  # create relation with model
+            data.name = form.cleaned_data['name']  # get form input data
+            data.email = form.cleaned_data['email']
+            data.subject = form.cleaned_data['subject']
+            data.message = form.cleaned_data['message']
+            data.ip = request.META.get('REMOTE_ADDR')
+            
+            data.save()  # save data to table
+            messages.success(request, "Your message has ben sent. Thank you for your message.")
+            return HttpResponseRedirect('/user_profile')
+
+    form = UserProfileForm
+    context = {'form': form}
+    return render(request, 'userprofile.html', context)

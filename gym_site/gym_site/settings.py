@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     #? MY APPS
     'home',
     'product',
-    #? 'editor'
+    'user',
+    #? Editor
     'ckeditor',
     'ckeditor_uploader',
     'active_link',
+    'mptt',
 ]
 
 MIDDLEWARE = [

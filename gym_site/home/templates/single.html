@@ -61,14 +61,14 @@
                 <h3 class="mb-4 font-weight-bold">3 Comments</h3>
 
                 {% comment %} ! COMMENT APPS {% endcomment %}
-                {% for yorum in comments %}
+                {% for comment in comments %}
                 <div class="media mb-4">
-                    <img src="{{ yorum.user.userprofile.image.url}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                    <img src="{{ comment.user.userprofile.image.url}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                     <div class="media-body">
-                        <h6>{{ yorum.user.get_full_name }} <small> - <i>{{ yorum.create_at }}</i></small></h6>
+                        <h6>{{ comment.user.get_full_name }} <small> - <i>{{ comment.create_at }}</i></small></h6>
                     <div class="text-primary mb-2">
                         </div>
-                            <p>{{ yorum.comment }}</p>
+                            <p>{{ comment.comment }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -121,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         {% if user.id is not None %}
-                        <input type="submit" value="Send Comment" class="btn btn-outline-primary px-3">
+                            <input type="submit" value="Send Comment" class="btn btn-outline-primary px-3">
                         {% else %}
                             You must be logged in to post a review
                         {% endif %}
