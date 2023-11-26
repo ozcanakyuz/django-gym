@@ -14,16 +14,13 @@ def index(request):
         weight = int(request.POST["weight"])
         height = int(request.POST["height"])
         bmi = (weight)/((height*height)) * 10000
-
         print(bmi)
-
         # if bmi < 18.5:
         #     print("You are weak.")
         # elif 18.5 <= bmi < 25:
         #     normal = 'You are at normal level.'
         # elif bmi > 30:
         #     owerveight = 'You are owerveight.'
-
         context = {'page': 'Home',
                    'bmi': bmi}
         return render(request, 'index.html', context)
@@ -41,8 +38,19 @@ def feature(request):
     return render(request, 'feature.html', context)
 
 def classes(request):
+    #! BMI CALCULATE
+    if request.method=='POST':
+        weight = int(request.POST["weightClass"])
+        height = int(request.POST["heightClass"])
+        bmi = (weight)/((height*height)) * 10000
+        print(bmi)
+        context = {'page': 'Classes',
+                   'bmiClass': bmi}
+        return render(request, 'classes.html', context)
+    
     context = {'page': 'Classes'}
     return render(request, 'classes.html', context)
+
 
 def contact(request):
     context = {'page': 'Contact'}

@@ -329,34 +329,62 @@
             <div class="col-md-6 bg-secondary py-5">
                 <div class="py-5 px-3">
                     <h1 class="mb-4 text-white">Calculate your BMI</h1>
-                    <form>
-                        <div class="form-row">
-                            <div class="col form-group">
-                                <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Weight (KG)">
+
+                        {% comment %} ! BMI CALCULATOR  {% endcomment %}
+                        <form action="/classes" method="POST">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Weight (KG)" name="weightClass">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Height (CM)" name="heightClass">
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Height (CM)">
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Age">
+                                </div>
+                                <div class="col form-group">
+                                    <select class="custom-select custom-select-lg bg-dark text-warning">
+                                        <option class="text-muted">Gender</option>
+                                        <option name="male">Male</option>
+                                        <option name="female">Female</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col form-group">
-                                <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Age">
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="submit" class="btn btn-lg btn-block btn-dark border-light" value="Calculate Now">
+    
+                                    {% comment %}! MALE FEMALE AYARI YAPILACAK KADINLARDA 19-24 NORMAL {% endcomment %}
+    
+                                    <h4 class="text-center text-light"><br>
+                                        {% if bmiClass %}
+                                        {{bmiClass}}
+                                        
+                                        <h5 class="text-center 
+                                        {% if bmiClass < 18.5 %} 
+                                            text-danger 
+                                            {% elif 18.5 <= bmiClass and bmiClass < 25 %} 
+                                            text-success
+                                            {% elif bmiClass > 30 %} 
+                                            text-danger
+                                        {% endif %} ">
+                                            {% if bmiClass < 18.5 %} 
+                                                You are weak!
+                                            {% elif 18.5 <= bmiClass and bmiClass < 25 %}
+                                                Your are at normal level.
+                                            {% elif bmiClass > 30 %}
+                                                You are owerveight.
+                                            {% endif %}
+                                        </h5>
+    
+                                        {% endif %}
+                                    </h4>                                
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <select class="custom-select custom-select-lg bg-dark text-muted">
-                                    <option>Gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <input type="button" class="btn btn-lg btn-block btn-dark border-light"
-                                    value="Calculate Now">
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                 </div>
             </div>
         </div>

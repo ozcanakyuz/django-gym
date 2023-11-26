@@ -10,7 +10,9 @@
     <meta content="Free Website Template" name="description">
 
     <!-- Icon -->
-    {% block head %} <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}" >  {% endblock %}
+    {% comment %} {% block head %} <link rel="shortcut icon" type="image/x-icon" href="{{ setting.icon.url }}" >  {% endblock %} {% endcomment %}
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"/>
 
 
     <!-- Font Awesome -->
