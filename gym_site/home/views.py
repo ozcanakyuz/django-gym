@@ -7,11 +7,30 @@ from home.forms import LoginForm, SignUpForm
 from home.models import ContactFormMessage, UserProfileForm, UserProfile
 from product.models import Comment
 
-# Create your views here.
 
 def index(request):
+    #! BMI CALCULATE
+    if request.method=='POST':
+        weight = int(request.POST["weight"])
+        height = int(request.POST["height"])
+        bmi = (weight)/((height*height)) * 10000
+
+        print(bmi)
+
+        # if bmi < 18.5:
+        #     print("You are weak.")
+        # elif 18.5 <= bmi < 25:
+        #     normal = 'You are at normal level.'
+        # elif bmi > 30:
+        #     owerveight = 'You are owerveight.'
+
+        context = {'page': 'Home',
+                   'bmi': bmi}
+        return render(request, 'index.html', context)
+    
     context = {'page': 'Home'}
     return render(request, 'index.html', context)
+
 
 def about(request):
     context = {'page': 'About'}
@@ -98,9 +117,13 @@ def userProfile_view(request):
             data.ip = request.META.get('REMOTE_ADDR')
             
             data.save()  # save data to table
-            messages.success(request, "Your message has ben sent. Thank you for your message.")
+            messages.success(request, "Your message has been sent. Thank you for your message.")
             return HttpResponseRedirect('/user_profile')
 
     form = UserProfileForm
     context = {'form': form}
     return render(request, 'userprofile.html', context)
+
+
+
+
