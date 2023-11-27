@@ -26,29 +26,23 @@
         <div class="col-lg-9 table-responsive mb-5">
             <div class="order-summary clearfix">
                 <div class="section-title">
-                    <h3 class="title">Order List</h3>
+                    <h3 class="title">Comments List</h3>
                 </div>
                    <table class="shopping-cart-table table">
                     <tr>
-                        <th class="text-left">Subject </th>
-                        <th class="text-left">Comment </th>
-                        <th class="text-left">Status </th>
-                        <th class="text-left">Date </th>
-                        <th class="text-left">Detail </th>
+                        <th class="text-left">User</th>
+                        <th class="text-left">Comment</th>
+                        <th class="text-left">Status</th>
+                        <th class="text-left">Date</th>
                     </tr>
-                    {% for rs in comments %}
+                    {% for comment in comments %}
                         <tr>
+                            <td class="text-left">{{ comment.user }} </td>
+                            <td class="text-left">{{ comment.comment }} </td>
+                            <td class="text-left">{{ comment.status }} </td>
+                            <td class="text-left">{{ comment.create_at }} </td>
                             <td class="text-left">
-                                <a href="/product_detail/{{ rs.product_id }}/{{ rs.product.slug }}">
-                                    <strong> {{ rs.product.title }}</strong>
-                                </a>
-                            </td>
-                            <td class="text-left">{{ rs.subject }} </td>
-                            <td class="text-left">{{ rs.comment }} </td>
-                            <td class="text-left">{{ rs.status }} </td>
-                            <td class="text-left">{{ rs.create_at }} </td>
-                            <td class="text-left">
-                                <a class="primary-btn" href="/user/deletecomment/{{ rs.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
+                                <a class="primary-btn" href="/user/deletecomment/{{ comment.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -58,8 +52,4 @@
     </div>
 </div>
 <!-- Comments End -->
-
-
-
-
- {% endblock %}
+{% endblock %}
