@@ -103,7 +103,7 @@
             </div>
             <div class="col-12">
                 <h3 class="mb-4 font-weight-bold">Send a comment</h3>
-                <form action="/product/addcomment/{{ urun.id }}" method="post">
+                <form action="/addcomment" method="post">
 
                     {% csrf_token %}
                     <div class="form-group">
@@ -119,13 +119,11 @@
                         <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Send Comment" class="btn btn-outline-primary px-3">
-                        
-                        {% comment %} {% if user.id is not None %}
+                        {% if user.id is not None %}
                             <input type="submit" value="Send Comment" class="btn btn-outline-primary px-3">
                         {% else %}
                             You must be logged in to post a review
-                        {% endif %} {% endcomment %}
+                        {% endif %}
                     </div>
                 </form>
             </div>

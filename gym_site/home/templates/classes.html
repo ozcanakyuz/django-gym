@@ -30,7 +30,14 @@
                     Lorem justo tempor sit aliquyam invidunt, amet vero ea dolor ipsum ut diam sit dolores, dolor
                     sit eos sea sanctus erat lorem nonumy sanctus takimata. Kasd amet sit sadipscing at..
                 </p>
-                <a href="" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                {%  if user.id is not None %}
+                <div class="nav-item mt-5">
+                    <h3 class="text-light">Welcome To The GYMNAST</h3>
+                    <h3><a href="/user" class="text-dark" >{{ user.username }}</a></h3>
+                </div>
+                    {% else %}
+                    <a href="/signup" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                {% endif %}
             </div>
         </div>
         <div class="col-md-6 p-0">
@@ -41,7 +48,14 @@
                     Lorem justo tempor sit aliquyam invidunt, amet vero ea dolor ipsum ut diam sit dolores, dolor
                     sit eos sea sanctus erat lorem nonumy sanctus takimata. Kasd amet sit sadipscing at..
                 </p>
-                <a href="" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                {%  if user.id is not None %}
+                <div class="nav-item mt-5">
+                    <h3 class="text-light">Welcome To The GYMNAST</h3>
+                    <h3><a href="/user" class="text-danger" >{{ user.username }}</a></h3>
+                </div>
+                    {% else %}
+                    <a href="/signup" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                {% endif %}
             </div>
         </div>
     </div>
