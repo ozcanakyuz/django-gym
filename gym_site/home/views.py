@@ -4,14 +4,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render
 
 from home.forms import LoginForm, SignUpForm
-from home.models import UserProfile #ContactFormMessage,
-
-
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-
-from home.models import CommentForm, Comment
+from home.models import UserProfile, ContactFormMessage, UserProfileForm, CommentForm, Comment
 
 
 def index(request):
