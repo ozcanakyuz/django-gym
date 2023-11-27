@@ -71,48 +71,46 @@ class UserProfileForm(ModelForm):
         fields = ['phone', 'address', 'city', 'country', 'image']
 
 
-#! ------------------- MESSAGE FORM ---------------------
+#! ------------------- CONTACT FORM MESSAGE ---------------------
 class ContactFormMessage(models.Model):
     STATUS = (
         ('New', 'New'),
         ('Read', 'Read'),
         ('Closed', 'Closed'),
     )
-    name = models.CharField(blank=True, max_length=20)
-    email = models.CharField(blank=True, max_length=50)
-    subject = models.CharField(blank=True, max_length=50)
-    message = models.TextField(blank=True, max_length=255)
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    name= models.CharField(blank=False,max_length=20) #! blank=False == Empty Boş da aynı şey demek
+    email= models.CharField(blank=False,max_length=50) #! blank=True olursa form boş da yollanabilir.
+    subject= models.CharField(blank=False,max_length=50)
+    message= models.TextField(blank=False,max_length=255)
+    status=models.CharField(max_length=10,choices=STATUS,default='New')
     ip = models.CharField(blank=True, max_length=20)
     note = models.CharField(blank=True, max_length=100)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    create_at=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+    
 
+#!    COMMENT FORM 
+class Comment(models.Model):
+    STATUS = (
+        ('New', 'New'),
+        ('True', 'True'),
+        ('False', 'False'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50, blank=True)
+    comment = models.CharField(max_length=250,blank=True)
+    ip = models.CharField(max_length=20, blank=True)
+    status=models.CharField(max_length=10,choices=STATUS, default='New')
+    create_at=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
 
-class ContactForm(ModelForm):
+    def __str__(self):
+        return self.subject
+
+class CommentForm(ModelForm):
     class Meta:
-        model = ContactFormMessage
-        fields = ['name', 'email', 'subject','message']
-        widgets = {
-            'name'   : TextInput(attrs={'class': 'input','placeholder':'Name & Surname'}),
-            'subject' : TextInput(attrs={'class': 'input','placeholder':'Subject'}),
-            'email'   : TextInput(attrs={'class': 'input','placeholder':'Email Address'}),
-            'message' : Textarea(attrs={'class': 'input','placeholder':'Your Message','rows':'5'}),
-        }
-
-# class ContactForm(ModelForm):
-#     class Meta:
-#         model = ContactFormMessage
-#         fields = ['name', 'email', 'subject', 'message']
-#         widgets = {
-#             'name': TextInput(
-#                 attrs={'type': "text",'class': "form-control", 'id': "name", 'placeholder': "Your Name", 'required': "required",'data-validation-required-message ': "Please enter your name"}),
-#             'email': TextInput(
-#                 attrs={'type': 'email', 'class': "form-control", 'id': "email", 'placeholder': "Your Email",'required': "required", 'data-validation-required-message': "Please enter your email"}),
-#             'subject': TextInput(
-#                 attrs={'type': "text", 'class': "form-control", 'id': "subject", 'placeholder': "Subject",'required': "required", 'data-validation-required-message': "Please enter a subject"}),
-#             'message': Textarea(attrs={'class': "form-control", 'rows': "6", 'id': "message", 'placeholder': "Message",'required': "required",'data-validation-required-message': "Please enter your message"}),
-#         }
+        model = Comment
+        fields = ['user','subject', 'comment']

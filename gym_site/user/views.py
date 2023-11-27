@@ -5,9 +5,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from home.models import Setting, UserProfile
+from home.models import UserProfile
+from home.models import Comment
 
-from product.models import Comment 
 from user.forms import UserUpdateForm, ProfileUpdateForm
 
 def index(request):
@@ -52,10 +52,13 @@ def user_password(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'user_password.html', {'form': form})
 
+
+#! COMMENT FORM
+
 @login_required(login_url='/login')
 def user_comments(request):
     current_user = request.user
-    comments = Comment.objects.filter(user_id=current_user.id)
+    comments = Comment.objects.filter(user_id = current_user.id)
     context = {'comments': comments}
     return render(request, 'user_comments.html', context)
 
