@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render
 
-from home.forms import LoginForm, SignUpForm
+from home.forms import ContactForm, LoginForm, SignUpForm
 from home.models import UserProfile, ContactFormMessage, UserProfileForm, CommentForm, Comment
 
 
@@ -50,16 +50,15 @@ def classes(request):
     context = {'page': 'Classes'}
     return render(request, 'classes.html', context)
 
-
-def contact(request):
-    context = {'page': 'Contact'}
-    return render(request, 'contact.html', context)
 def blog(request):
     context = {'page': 'Blog',}
     return render(request, 'blog.html', context)
 
+#! single.html içerisindeki for dögüsündeki 'comments' kısmını aşağıdan alıyoruz.
 def single(request):
-    context = {'page': 'Detail',}
+    comments = Comment.objects.filter()
+    context = { 'page': 'Blog',
+               'comments': comments}
     return render(request, 'single.html', context)
 
 #! LOG IN - LOG OUT & SIGN UP  
@@ -131,8 +130,31 @@ def userProfile_view(request):
     context = {'form': form}
     return render(request, 'userprofile.html', context)
 
+
+# CONTACT 
+def contact(request):
+    if request.method == 'POST':  # check post
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            data = ContactFormMessage()  # create relation with model
+            data.name = form.cleaned_data['name']  # get form input data
+            data.email = form.cleaned_data['email']
+            data.subject = form.cleaned_data['subject']
+            data.message = form.cleaned_data['message']
+            data.ip = request.META.get('REMOTE_ADDR')
+            data.save()  # save data to table
+            messages.success(request, "Your message has ben sent. Thank you for your message.")
+            return HttpResponseRedirect('/contact')
+
+    form = ContactForm
+    context = {'form': form,
+               'page': 'Contact'}
+    return render(request, 'contact.html', context)
+
+
 #! ADD COMMENT  COMMENT FORM
-def addcomment(request): #? ,id
+
+def addcomment(request):
    url = request.META.get('HTTP_REFERER')  # get last url
    #return HttpResponse(url)
    if request.method == 'POST':  # check post
@@ -141,12 +163,14 @@ def addcomment(request): #? ,id
          data = Comment()  # create relation with model
          data.subject = form.cleaned_data['subject']
          data.comment = form.cleaned_data['comment']
+        #  data.rate = form.cleaned_data['rate']
          data.ip = request.META.get('REMOTE_ADDR')
+        #  data.product_id=id
          current_user= request.user
          data.user_id=current_user.id
-         
          data.save()  # save data to table
-         messages.success(request, "Your review has ben sent. Thank you for your interest.")
+         messages.success(request, "Your review has been sent. Thank you for your interest.")
          return HttpResponseRedirect(url)
-
+      else:
+        messages.warning(request, "Lütfen mesaj kutucuklarini doldurunuz!!") 
    return HttpResponseRedirect(url)

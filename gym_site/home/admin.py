@@ -17,7 +17,7 @@ admin.site.register(ContactFormMessage, ContactFormMessageAdmin)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['user','subject','comment', 'status','create_at']
     list_filter = ['status']
-    # readonly_fields = ('subject','comment','ip','user','id')
+    readonly_fields = ('subject','comment','ip','user','id')
 
 admin.site.register(Comment, CommentAdmin)
 

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #? MY APPS
     'home',
-    'product',
     'user',
     #? Editor
     'ckeditor',

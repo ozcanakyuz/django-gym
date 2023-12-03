@@ -93,15 +93,18 @@ class ContactFormMessage(models.Model):
     
 
 #!    COMMENT FORM 
+
 class Comment(models.Model):
     STATUS = (
         ('New', 'New'),
         ('True', 'True'),
         ('False', 'False'),
     )
+    # post=models.ForeignKey(Post,on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50, blank=True)
-    comment = models.CharField(max_length=250,blank=True)
+    subject = models.CharField(max_length=50, blank=False)
+    comment = models.CharField(max_length=250,blank=False)
+    # rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=20, blank=True)
     status=models.CharField(max_length=10,choices=STATUS, default='New')
     create_at=models.DateTimeField(auto_now_add=True)
@@ -113,4 +116,4 @@ class Comment(models.Model):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['subject', 'comment']
+        fields = ['subject', 'comment'] #? 'rate'

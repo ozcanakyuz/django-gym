@@ -37,7 +37,9 @@
                     </tr>
                     {% for comment in comments %}
                         <tr>
-                            <td class="text-left">{{ comment.user }} </td>
+                            <td class="text-left">
+                                <a href="/single" class="text-success">{{ comment.user }}</a>
+                            </td>
                             <td class="text-left">{{ comment.comment }} </td>
                             <td class="text-left">{{ comment.status }} </td>
                             <td class="text-left">{{ comment.create_at }} </td>
