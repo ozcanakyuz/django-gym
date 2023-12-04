@@ -3,12 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from django.forms import ModelForm, TextInput, Textarea
-from home.models import ContactFormMessage
+from home.models import Comment, ContactFormMessage
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput())
-    # catid = forms.IntegerField()
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=30,label= 'User Name :')
@@ -43,3 +42,7 @@ class ContactForm(ModelForm):
                 'required': "required",
                 'data-validation-required-message': "Please enter your message"}),
         }
+
+
+#! COMMENT FORM
+

@@ -1,10 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from home.forms import ContactForm, LoginForm, SignUpForm
-from home.models import UserProfile, ContactFormMessage, UserProfileForm, CommentForm, Comment
+from home.models import ReplyComment, ReplyCommentForm, UserProfile, ContactFormMessage, UserProfileForm, CommentForm, Comment
 
 
 def index(request):
@@ -53,13 +53,6 @@ def classes(request):
 def blog(request):
     context = {'page': 'Blog',}
     return render(request, 'blog.html', context)
-
-#! single.html içerisindeki for dögüsündeki 'comments' kısmını aşağıdan alıyoruz.
-def single(request):
-    comments = Comment.objects.filter()
-    context = { 'page': 'Blog',
-               'comments': comments}
-    return render(request, 'single.html', context)
 
 #! LOG IN - LOG OUT & SIGN UP  
 def login_view(request):
@@ -152,25 +145,56 @@ def contact(request):
     return render(request, 'contact.html', context)
 
 
-#! ADD COMMENT  COMMENT FORM
 
+
+#! single.html içerisindeki for dögüsündeki 'comments' kısmını aşağıdan alıyoruz.
+def single(request):
+    comments = Comment.objects.all()
+    repcomments = ReplyComment.objects.filter()
+    context = {'page': 'Blog',
+               'comments': comments,
+               'repcomments': repcomments}
+    return render(request, 'single.html', context)
+
+#! ADD COMMENT  COMMENT FORM
 def addcomment(request):
-   url = request.META.get('HTTP_REFERER')  # get last url
-   #return HttpResponse(url)
-   if request.method == 'POST':  # check post
-      form = CommentForm(request.POST)
-      if form.is_valid():
-         data = Comment()  # create relation with model
-         data.subject = form.cleaned_data['subject']
-         data.comment = form.cleaned_data['comment']
-        #  data.rate = form.cleaned_data['rate']
-         data.ip = request.META.get('REMOTE_ADDR')
-        #  data.product_id=id
-         current_user= request.user
-         data.user_id=current_user.id
-         data.save()  # save data to table
-         messages.success(request, "Your review has been sent. Thank you for your interest.")
-         return HttpResponseRedirect(url)
-      else:
-        messages.warning(request, "Lütfen mesaj kutucuklarini doldurunuz!!") 
-   return HttpResponseRedirect(url)
+    url = request.META.get('HTTP_REFERER')  # get last url
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = Comment()  # create relation with model
+            data.subject = form.cleaned_data['subject']
+            data.comment = form.cleaned_data['comment']
+            data.ip = request.META.get('REMOTE_ADDR')
+            current_user= request.user
+            data.user_id=current_user.id
+            data.save()  # save data to table
+            messages.success(request, 'MESAJINIZ EKLENMİŞTİR.')
+            return HttpResponseRedirect(url)
+        else:
+            messages.warning(request, "Lütfen mesaj kutucuklarini doldurunuz!!") 
+    return HttpResponseRedirect(url)
+        
+def replyComment(request, comment_id):
+    url = request.META.get('HTTP_REFERER')  # get last url
+    
+    if request.method == 'POST':
+        form = ReplyCommentForm(request.POST)
+        if form.is_valid():
+            data = ReplyComment()  # create relation with model
+            data.subject = form.cleaned_data['subject']
+            data.repcomment = form.cleaned_data['repcomment']
+            data.ip = request.META.get('REMOTE_ADDR')
+            current_user= request.user
+            data.user_id=current_user.id
+            data.comment_id = comment_id
+            data.save()  # save data to table
+            messages.success(request, 'Comment replied!')
+            return HttpResponseRedirect(url)
+        else:
+            messages.warning(request, "Lütfen mesaj kutucuklarini doldurunuz!!") 
+    return HttpResponseRedirect(url)
+        
+
+

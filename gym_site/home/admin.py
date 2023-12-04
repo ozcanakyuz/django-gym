@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from home.models import Comment, ContactFormMessage, Setting, UserProfile
+from home.models import Comment, ContactFormMessage, ReplyComment, Setting, UserProfile
 
 
 # Register your models here.
@@ -15,11 +15,17 @@ class ContactFormMessageAdmin(admin.ModelAdmin):
 admin.site.register(ContactFormMessage, ContactFormMessageAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['user','subject','comment', 'status','create_at']
+    list_display = ['user','subject','comment','status','create_at']
     list_filter = ['status']
     readonly_fields = ('subject','comment','ip','user','id')
-
 admin.site.register(Comment, CommentAdmin)
+
+class ReplyCommentAdmin(admin.ModelAdmin):
+    list_display = ['user','subject','repcomment','status','create_at']
+    list_filter = ['status']
+    readonly_fields = ('subject','repcomment','ip','user','id')
+
+admin.site.register(ReplyComment, ReplyCommentAdmin)
 
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ['user_name','address', 'phone','city','country','image_tag']

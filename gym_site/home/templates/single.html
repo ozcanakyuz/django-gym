@@ -21,7 +21,7 @@
 <!-- Blog Detail Start -->
     <div class="container py-5">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 shadow-lg pt-3 rounded">
                 <img class="img-fluid mb-4" src="{% static "img/carousel-1.jpg" %}" alt="Image">
                 <div class="d-flex align-items-center mb-4">
                     <div class="d-flex flex-column align-items-center justify-content-center rounded-circle bg-primary text-white" style="width: 100px; height: 100px;">
@@ -48,7 +48,7 @@
                 <p>Diam dolor est labore duo invidunt ipsum clita et, sed et lorem voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos. Clita no magna no dolor erat diam tempor rebum consetetur, sanctus labore sed nonumy diam lorem amet eirmod. No at tempor sea diam kasd, takimata ea nonumy elitr sadipscing gubergren erat. Gubergren at lorem invidunt sadipscing rebum sit amet ut ut, voluptua diam dolores at sadipscing stet. Clita dolor amet dolor ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et. Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam takimata sea kasd dolores diam, amet et est accusam labore eirmod vero et voluptua. Amet labore clita duo et no. Rebum voluptua magna eos magna, justo gubergren labore sit voluptua eos. Dolores et no stet magna et gubergren amet dolor sit, lorem dolore est vero et. Justo erat magna ipsum magna sea. Magna amet est sit sed sadipscing. At takimata dolores ut dolore takimata stet nonumy ipsum, gubergren vero ea consetetur aliquyam kasd est magna justo, dolore justo at dolore et aliquyam nonumy lorem gubergren. Amet duo invidunt kasd labore aliquyam. Vero dolores lorem elitr justo ut, accusam erat sed dolor at accusam takimata ipsum sea diam. Ipsum voluptua lorem sed amet, amet sea sit et at nonumy labore takimata, justo ipsum voluptua stet takimata. Ea lorem elitr aliquyam gubergren sit magna sanctus, sed sed dolore ipsum justo dolor et amet invidunt erat. Sadipscing sanctus stet.</p>
             </div>
             <div class="col-12 pt-4">
-                <div class="media bg-secondary text-white mb-4 p-5">
+                <div class="media bg-secondary text-white mb-4 p-5 shadow-lg rounded">
                     <img src="{% static "img/user.jpg" %}" alt="Image" class="mr-3 mt-1 rounded-circle p-3 bg-dark" style="width:150px;">
                     <div class="media-body">
                         <h4 class="text-primary mb-3">John Doe</h4>
@@ -60,33 +60,71 @@
                 <h3 class="mb-4 font-weight-bold">3 Comments</h3>
 
                 {% comment %} ! COMMENT APPS {% endcomment %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} text-center shadow-lg rounded p-4" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
                 {% for comment in comments %}
-                <div class="media mb-4 shadow-sm bg-light p-4">
+                <div class="media mb-4 shadow-lg bg-light p-4 rounded">
                     <img src="{{ comment.user.userprofile.image.url }}" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
                     <div class="media-body">
                         <h4>{{ comment.user.get_full_name }} <small> - <i>{{ comment.create_at }}</i></small></h4>
                         <p>{{ comment.comment }}</p>
-                        <button class="btn btn-sm btn-success">Reply</button>
-                    </div>
+                        <hr>
+                            <a type="text" data-toggle="collapse" data-target="#reply{{comment.id}}" class="btn float-right btn-success rounded shadow-sm " href="">Reply</a><br>
+                            <div id="reply{{comment.id}}" class="collapse in">
+
+                              <form method="post" action="/replycomment/{{comment.id}}"> 
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="message">Your Message*</label>
+                                    <textarea id="message" cols="30" rows="5" class="form-control" name="repcomment"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Subject*</label>
+                                    <input type="text" class="form-control" id="message" name="subject">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name">Your Name*</label>
+                                    <input type="text" class="form-control" id="name" name="user">
+                                </div>
+                                   <div class="form-group mb-0">
+                                    {% if user.id is not None %}
+                                        <input type="submit" value="Reply" class="btn btn-success float-right rounded shadow-sm ml-2">
+                                    {% else %}
+                                        <a href="/login">You must be logged in to post a review</a>
+                                    {% endif %} 
+                                    </div>
+                               </form>
+                            </div>
+                        {% if repcomments %}
+                            {% for repcomment in repcomments %}
+                            <div class="media bg-light mt-4 p-4 rounded">
+                                <img src="{{ repcomment.user.userprofile.image.url }}" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
+                                <div class="media-body">
+                                    <h4>{{ repcomment.user.get_full_name }} <small> - <i>{{ repcomment.create_at }}</i></small></h4>
+                                    <p>{{ repcomment.repcomment }}</p>
+                                   <hr>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
                 </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
 
         {% comment %}! YORUM KISMI BAŞARILI OLURSA GÖSTERİLECEK MESAJ {% endcomment %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}" role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
 
             </div>
-
             <div class="col-12">
+                <div class="shadow-lg p-4 rounded">
                 <h3 class="mb-4 font-weight-bold">Send a comment</h3>
-                
-                <form action="{% url 'addcomment' %}" method="POST">
+
+                <form action="addcomment" method="POST">
                     {% csrf_token %}
                         <div class="form-group">
                             <label for="message">Your Message*</label>
@@ -102,13 +140,14 @@
                         </div>
                         <div class="form-group mb-0">
                         {% if user.id is not None %}
-                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3 mt-2 rounded shadow-sm">
                         {% else %}
                             <a href="/login">You must be logged in to post a review</a>
                         {% endif %} 
                         </div>
                 </form>
             </div>
+        </div>
         </div>
     </div>
 <!-- Blog Detail End -->

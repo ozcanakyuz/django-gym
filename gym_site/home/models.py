@@ -1,11 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.forms import ModelForm, TextInput, Textarea
-from django.http import request
+from django.forms import ModelForm 
 from django.utils.safestring import mark_safe
+
 
 class Setting(models.Model):
     STATUS = (
@@ -93,18 +91,11 @@ class ContactFormMessage(models.Model):
     
 
 #!    COMMENT FORM 
-
 class Comment(models.Model):
-    STATUS = (
-        ('New', 'New'),
-        ('True', 'True'),
-        ('False', 'False'),
-    )
-    # post=models.ForeignKey(Post,on_delete=models.CASCADE)
+    STATUS = (('New', 'New'),('True', 'True'),('False', 'False'),)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50, blank=False)
     comment = models.CharField(max_length=250,blank=False)
-    # rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=20, blank=True)
     status=models.CharField(max_length=10,choices=STATUS, default='New')
     create_at=models.DateTimeField(auto_now_add=True)
@@ -116,4 +107,23 @@ class Comment(models.Model):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['subject', 'comment'] #? 'rate'
+        fields = ['subject', 'comment']
+
+class ReplyComment(models.Model):
+    STATUS = (('New', 'New'),('True', 'True'),('False', 'False'),)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) #related_name='replies'
+    subject = models.CharField(max_length=50, blank=False)
+    repcomment = models.CharField(max_length=250,blank=False)
+    ip = models.CharField(max_length=20, blank=True)
+    status=models.CharField(max_length=10,choices=STATUS, default='New')
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject
+
+class ReplyCommentForm(ModelForm):
+    class Meta:
+        model = ReplyComment
+        fields = ['subject','repcomment']
