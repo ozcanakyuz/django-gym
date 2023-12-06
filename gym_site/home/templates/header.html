@@ -15,7 +15,7 @@
 
                 {% with request.resolver_match.url_name as url_name %}
                     
-                    <a href="/" class="nav-item nav-link {% if url_name == 'home' %}active{% endif %}">Home</a>
+                    <a href="/" class="nav-item nav-link {% if url_name == 'index' %}active{% endif %}">Home</a>
                     <a href="/about" class="nav-item nav-link {% if url_name == 'about' %}active{% endif %}">About Us</a>
                     <a href="/feature" class="nav-item nav-link {% if url_name == 'feature' %}active{% endif %}">Our Features</a>
                     <a href="/classes" class="nav-item nav-link {% if url_name == 'classes' %}active{% endif %}">Classes</a>
@@ -31,10 +31,10 @@
                 {% comment %}!! ACTIVE COMMAND DON'T WORK !! {% endcomment %}
                 {%  if user.id is not None %}
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle {% if url_name  == 'user' %}active{% endif %}" data-toggle="dropdown">{{ user.username }}</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if url_name == 'user_comments' or url_name == 'index' %}active{% endif %}" data-toggle="dropdown">{{ user.username }}</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                    <a href="/user" class="dropdown-item {% if url_name == 'user' %}active{% endif %}">User Profile</a>
-                    <a href="/user/comments"  class="dropdown-item {% if url_name == '/user/comments' %}active{% endif %}">My Comments</a>
+                    <a href="/user" class="dropdown-item {% if url_name == 'index' %}active{% endif %}">User Profile</a>
+                    <a href="/user/comments"  class="dropdown-item {% if url_name == 'user_comments' %}active{% endif %}">My Comments</a>
                     <a href="/logout"  class="dropdown-item">Logout</a>
                     </div>
                 </div>

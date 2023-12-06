@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from home.models import UserProfile
+from home.models import ReplyComment, UserProfile
 from home.models import Comment
 
 from user.forms import UserUpdateForm, ProfileUpdateForm
@@ -14,7 +14,6 @@ def index(request):
     current_user = request.user
     # print(current_user)
     profile = UserProfile.objects.get(user_id = current_user.pk)
-    print(profile)
     context = {'profile': profile}
     return render(request, 'user_profile.html', context)
 
@@ -59,12 +58,15 @@ def user_password(request):
 def user_comments(request):
     current_user = request.user
     comments = Comment.objects.filter(user_id = current_user.id)
-    context = {'comments': comments}
+    replycomments = ReplyComment.objects.filter(user_id = current_user.id)
+    context = {'comments': comments,
+               'replycomments': replycomments}
     return render(request, 'user_comments.html', context)
 
 @login_required(login_url='/login') # Check login
 def user_deletecomment(request,id):
     current_user = request.user
     Comment.objects.filter(id=id, user_id=current_user.id).delete()
+    ReplyComment.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Comment deleted..')
     return HttpResponseRedirect('/user/comments')

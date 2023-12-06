@@ -480,18 +480,16 @@
                                 <input type="text" class="form-control form-control-lg bg-dark text-white" placeholder="Age">
                             </div>
                             <div class="col form-group">
-                                <select class="custom-select custom-select-lg bg-dark text-warning">
+                                <select class="custom-select custom-select-lg bg-dark">
                                     <option class="text-muted">Gender</option>
-                                    <option name="male">Male</option>
-                                    <option name="female">Female</option>
+                                    <option class="text-warning">Male</option>
+                                    <option class="text-warning">Female</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <input type="submit" class="btn btn-lg btn-block btn-dark border-light" value="Calculate Now">
-
-                                {% comment %}! MALE FEMALE AYARI YAPILACAK KADINLARDA 19-24 NORMAL {% endcomment %}
 
                                 <h4 class="text-center text-light"><br>
                                     {% if bmi %}
@@ -505,13 +503,13 @@
                                         {% elif bmi > 30 %} 
                                         text-danger
                                     {% endif %} ">
-                                        {% if bmi < 18.5 %} 
-                                            You are weak!
-                                        {% elif 18.5 <= bmi and bmi < 25 %}
-                                            Your are at normal level.
-                                        {% elif bmi > 30 %}
-                                            You are owerveight.
-                                        {% endif %}
+                                    {% if bmi < 18.5 %} 
+                                        You are weak!
+                                    {% elif 18.5 <= bmi and bmi < 25 %}
+                                        Your are at normal level.
+                                    {% elif bmi > 30 %}
+                                        You are owerveight.
+                                    {% endif %}
                                     </h5>
 
                                     {% endif %}

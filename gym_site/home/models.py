@@ -109,9 +109,10 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ['subject', 'comment']
 
+
 class ReplyComment(models.Model):
     STATUS = (('New', 'New'),('True', 'True'),('False', 'False'),)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
+    #* comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) #related_name='replies'
     subject = models.CharField(max_length=50, blank=False)
     repcomment = models.CharField(max_length=250,blank=False)

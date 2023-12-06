@@ -26,30 +26,68 @@
         <div class="col-lg-9 table-responsive mb-5">
             <div class="order-summary clearfix">
                 <div class="section-title">
-                    <h3 class="title">Comments List</h3>
+                    <h3 class="title">Comment List</h3>
                 </div>
                    <table class="shopping-cart-table table">
-                    <tr>
-                        <th class="text-left">User</th>
-                        <th class="text-left">Comment</th>
-                        <th class="text-left">Status</th>
-                        <th class="text-left">Date</th>
-                    </tr>
+                        <thead class="bg-secondary text-light">
+                            <tr>
+                                <th class="align-middle">User</th>
+                                <th class="align-middle">Comment</th>
+                                <th class="align-middle">Status</th>
+                                <th class="align-middle">Date</th>
+                                <th class="align-middle">Remove</th>
+                            </tr>
+                        </thead>
                     {% for comment in comments %}
                         <tr>
-                            <td class="text-left">
+                            <td class="align-middle">
                                 <a href="/single" class="text-success">{{ comment.user }}</a>
                             </td>
-                            <td class="text-left">{{ comment.comment }} </td>
-                            <td class="text-left">{{ comment.status }} </td>
-                            <td class="text-left">{{ comment.create_at }} </td>
-                            <td class="text-left">
-                                <a class="primary-btn" href="/user/deletecomment/{{ comment.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a>
+                            <td class="align-middle">{{ comment.comment }} </td>
+                            <td class="align-middle">{{ comment.status }} </td>
+                            <td class="align-middle">{{ comment.create_at }} </td>
+                            <td class="align-middle">
+                                <a href="/user/deletecomment/{{ comment.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"><button class="btn btn-outline-danger"><i class="fa fa-times"></i></button></a>
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
+
+
+            {% comment %}! REPLY COMMENT {% endcomment %}
+            <div class="order-summary clearfix">
+                <div class="section-title">
+                    <h3 class="title">Reply-Comment List</h3>
+                </div>
+                   <table class="shopping-cart-table table">
+                        <thead class="bg-secondary text-light">
+                            <tr>
+                                <th class="align-middle">User</th>
+                                <th class="align-middle">Comment</th>
+                                <th class="align-middle">Status</th>
+                                <th class="align-middle">Date</th>
+                                <th class="align-middle">Remove</th>
+                            </tr>
+                        </thead>
+                    {% for replycomment in replycomments %}
+                        <tr>
+                            <td class="align-middle">
+                                <a href="/single" class="text-success">{{ replycomment.user }}</a>
+                            </td>
+                            <td class="align-middle">{{ replycomment.repcomment }} </td>
+                            <td class="align-middle">{{ replycomment.status }} </td>
+                            <td class="align-middle">{{ replycomment.create_at }} </td>
+                            <td class="align-middle">
+                                <a href="/user/deletecomment/{{ replycomment.id }}" onclick="return confirm('Will be Delete ! Are you sure?')"><button class="btn btn-outline-danger"><i class="fa fa-times"></i></button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
+
         </div>
     </div>
 </div>

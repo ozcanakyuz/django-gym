@@ -13,19 +13,9 @@ def index(request):
         weight = int(request.POST["weight"])
         height = int(request.POST["height"])
         bmi = (weight)/((height*height)) * 10000
-        print(bmi)
-        # if bmi < 18.5:
-        #     print("You are weak.")
-        # elif 18.5 <= bmi < 25:
-        #     normal = 'You are at normal level.'
-        # elif bmi > 30:
-        #     owerveight = 'You are owerveight.'
-        context = {'page': 'Home',
-                   'bmi': bmi}
-        return render(request, 'index.html', context)
-    
-    context = {'page': 'Home'}
-    return render(request, 'index.html', context)
+        return render(request, 'index.html', {'bmi': bmi, 'page': 'Home'})
+
+    return render(request, 'index.html', {'page': 'Home'})
 
 
 def about(request):
@@ -176,6 +166,7 @@ def addcomment(request):
             messages.warning(request, "Lütfen mesaj kutucuklarini doldurunuz!!") 
     return HttpResponseRedirect(url)
         
+
 def replyComment(request, comment_id):
     url = request.META.get('HTTP_REFERER')  # get last url
     
